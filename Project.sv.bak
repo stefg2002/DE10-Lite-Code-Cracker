@@ -1,0 +1,70 @@
+module Project(KEY0, KEY1, LED,SW,HEX0,HEX1,HEX2,HEX3,HEX4,clk);
+
+	input KEY0, KEY1, clk;
+	input logic [9:0] SW;
+	output logic [9:0] LED;
+	output logic [7:0] HEX0,HEX1,HEX2,HEX3,HEX4;
+	
+	logic [9:0] password, out;
+	
+	logic unlocked;
+	
+	assign LED[9:2] = 8'b00000000;
+		
+	always @(posedge clk)begin
+	 
+		if(KEY0 == 0 && KEY1 == 1)begin
+			
+			if((SW ~^ password) == 10'b1111111111 )begin
+				
+				LED[0] = 1;
+				LED[1] = 1;
+				
+				HEX0 = 8'b11111111;
+				HEX1 = 8'b11111111;
+				HEX2 = 8'b11111111;
+				HEX3 = 8'b11111111;
+				HEX4 = 8'b11111111;
+				
+				unlocked = 1;
+				
+			end
+			
+			else begin
+			
+				LED[0] = 0;
+				LED[1] = 0;
+			
+				HEX0 = 8'b10101111;
+				HEX1 = 8'b10100011;
+				HEX2 = 8'b10101111;
+				HEX3 = 8'b10101111;
+				HEX4 = 8'b10000110;
+				
+				unlocked = 0;
+				
+			end
+			
+		end
+		else if(KEY0 == 1 && KEY1 == 0)begin
+			
+			if(unlocked == 1)begin
+				password = SW;
+			end
+			else begin
+				HEX0 = 8'b10101111;
+				HEX1 = 8'b10100011;
+				HEX2 = 8'b10101111;
+				HEX3 = 8'b10101111;
+				HEX4 = 8'b10000110;
+			end
+		
+		end
+		
+	end
+	 
+	
+	 
+		
+
+endmodule
