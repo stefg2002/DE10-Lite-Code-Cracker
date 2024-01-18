@@ -1,0 +1,1 @@
+Warning (10268): Verilog HDL information at Project.sv(14): always construct contains both blocking and non-blocking assignments File: Z:/EECS 3201/Final Project/Project.sv Line: 14
